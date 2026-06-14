@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Nevziye & Şahin Evleniyor">
+    <meta property="og:description" content="Nevziye ve Şahin'in düğün davetiyesi">
+    <meta property="og:image" content="https://img.icons8.com/color/96/000000/hearts.png">
+    <title>Nevziye & Şahin Evleniyor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #fff0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Müzik Butonu */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            background: rgba(255, 182, 193, 0.9);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            color: #7a444d;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        /* Giriş Kapağı */
+        .cover-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffd1dc 100%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s;
+            color: #fff;
+            text-align: center;
+        }
+
+            .cover-overlay.opened {
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+            }
+
+        .cover-ornament {
+            font-size: 40px;
+            margin-bottom: 20px;
+            animation: heartBeat 2s infinite;
+        }
+
+        .cover-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 64px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(122, 68, 77, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .open-btn {
+            background: #fff;
+            color: #b05c68;
+            border: none;
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .open-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Ana Davetiye Kartı */
+        .main-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            margin: 20px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(122, 68, 77, 0.15);
+            overflow: hidden;
+            border: 4px double #ffccd5;
+            text-align: center;
+            position: relative;
+        }
+
+        .card-header-art {
+            background: linear-gradient(to bottom, #ffe4e1, #ffffff);
+            padding: 30px 20px 10px 20px;
+        }
+
+        .floral-line {
+            color: #ffb6c1;
+            font-size: 24px;
+            letter-spacing: 6px;
+        }
+
+        .card-body {
+            padding: 20px 30px 40px 30px;
+        }
+
+        .parents-section {
+            font-size: 13px;
+            color: #8b7375;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            background: #fff5f6;
+            padding: 12px;
+            border-radius: 12px;
+        }
+
+        .parents-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            color: #d48a94;
+        }
+
+        .main-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 52px;
+            color: #b05c68;
+            margin: 15px 0;
+        }
+
+        .invitation-quote {
+            font-size: 14px;
+            font-style: italic;
+            color: #695355;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .event-details-box {
+            background: #fff5f6;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #ffb6c1;
+        }
+
+        .detail-row {
+            margin: 12px 0;
+            font-size: 14px;
+            color: #4a3b3c;
+        }
+
+            .detail-row strong {
+                color: #b05c68;
+                display: inline-block;
+                width: 80px;
+                text-align: left;
+            }
+
+        .map-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #d48a94;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .map-link-btn:hover {
+            background: #c07885;
+        }
+
+        /* Geri Sayım */
+        .countdown-section {
+            margin: 30px 0;
+        }
+
+            .countdown-section h3 {
+                font-size: 13px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: #8b7375;
+                margin-bottom: 15px;
+            }
+
+        .timer-grid {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .timer-slot {
+            background: linear-gradient(135deg, #ffb6c1 0%, #fcaec1 100%);
+            color: white;
+            width: 65px;
+            padding: 10px 0;
+            border-radius: 12px;
+        }
+
+            .timer-slot span {
+                font-size: 22px;
+                font-weight: 700;
+                display: block;
+            }
+
+            .timer-slot label {
+                font-size: 10px;
+                text-transform: uppercase;
+                opacity: 0.9;
+                display: block;
+            }
+
+        .divider-line {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ffccd5, transparent);
+            margin: 30px 0;
+        }
+
+        .btn-rsvp {
+            background: white;
+            border: 2px solid #ffb6c1;
+            color: #b05c68;
+            padding: 12px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+            .btn-rsvp:hover {
+                background: #ffb6c1;
+                color: white;
+            }
+
+        .share-instructions {
+            margin-top: 20px;
+            font-size: 11px;
+            color: #9c8285;
+            background: #fdf6f7;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px dashed #ffccd5;
+        }
+
+        .share-link-section {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f8ff;
+            border-radius: 12px;
+            border: 2px solid #add8e6;
+        }
+
+        .share-link-section strong {
+            color: #4682b4;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .link-box {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            word-break: break-all;
+            font-size: 12px;
+            color: #333;
+            margin-bottom: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .copy-btn {
+            background: #4682b4;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #36648b;
+        }
+
+        .copy-feedback {
+            display: none;
+            color: #28a745;
+            font-size: 11px;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        @keyframes heartBeat {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-names {
+                font-size: 40px;
+            }
+
+            .cover-title {
+                font-size: 48px;
+            }
+
+            .timer-grid {
+                gap: 8px;
+            }
+
+            .timer-slot {
+                width: 55px;
+            }
+
+            .timer-slot span {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="music-control" id="musicBtn" onclick="toggleMusic()">
+        <span>🎵 Müzik: Kapalı</span>
+    </button>
+
+    <audio id="bgMusic1" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <div class="cover-overlay" id="weddingCover">
+        <div class="cover-ornament">💖</div>
+        <h1 class="cover-title">EVLENİYORUZ</h1>
+        <p style="margin-bottom: 25px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase;">Nevziye & Şahin</p>
+        <button class="open-btn" onclick="openInvitation()">Davetiyeyi Aç</button>
+    </div>
+
+    <div class="main-card">
+        <div class="card-header-art">
+            <div class="floral-line">🌸 • ⚜ • 🌸</div>
+        </div>
+
+        <div class="card-body">
+            <div class="parents-section">
+                <div class="parents-title">Kız Tarafı</div>
+                <div>Fatma & Ahmet Sarı</div>
+                <div class="parents-title" style="margin-top: 8px;">Oğlan Tarafı</div>
+                <div>Nevzat & Şadiye Kara</div>
+            </div>
+
+            <h2 class="main-names">Nevziye & Şahin</h2>
+            <p style="font-weight: 700; color: #7a444d; letter-spacing: 2px; font-size: 16px; margin-top: -10px; margin-bottom: 15px;">KARA</p>
+
+            <p class="invitation-quote">
+                "Hayatımızın en anlamlı gününde, mutluluğumuzu paylaşmak adına sizleri de aramızda görmekten onur duyarız."
+            </p>
+
+            <div class="event-details-box">
+                <div class="detail-row">
+                    <strong>Tarih:</strong> 18 Temmuz & 19 Temmuz
+                </div>
+                <div class="detail-row">
+                    <strong>Mekan:</strong> Velimeşe Yazlık Düğün Salonu
+                </div>
+                <div class="detail-row">
+                    <strong>Sıra/No:</strong> No: 6
+                </div>
+
+                <a href="https://www.google.com/maps/dir//Velime%C5%9Fe+A%C3%A7%C4%B1k+D%C3%BC%C4%9F%C3%BCn+Salonu,+Velime%C5%9Fe,+59880+%C3%87orlu%2FTekirda%C4%9F/@41.2572198,27.8861409,14z" target="_blank" class="map-link-btn">
+                    📍 Konum ve Harita
+                </a>
+            </div>
+
+            <div class="countdown-section">
+                <h3>Büyük Güne Kalan Süre</h3>
+                <div class="timer-grid">
+                    <div class="timer-slot"><span id="days">00</span><label>Gün</label></div>
+                    <div class="timer-slot"><span id="hours">00</span><label>Saat</label></div>
+                    <div class="timer-slot"><span id="minutes">00</span><label>Dk</label></div>
+                    <div class="timer-slot"><span id="seconds">00</span><label>Sn</label></div>
+                </div>
+            </div>
+
+            <div class="divider-line"></div>
+
+            <div class="rsvp-section">
+                <button class="btn-rsvp" style="width:100%; margin-bottom:8px;" onclick="rsvpStatus('Geleceğim')">🌸 Geleceğim</button>
+                <button class="btn-rsvp" style="width:100%;" onclick="rsvpStatus('Katılamıyorum')">✨ Katılamıyorum</button>
+            </div>
+
+            <div class="share-link-section">
+                <strong>🔗 Davetiye Linki</strong>
+                <div class="link-box" id="linkBox">https://hulyagoktekin-hub.github.io/dijital-davetiye/</div>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Linki Kopyala</button>
+                <div class="copy-feedback" id="copyFeedback">✓ Linki kopyalandı!</div>
+            </div>
+
+            <div class="share-instructions">
+                <strong>📲 Nasıl Kullanılır?</strong><br>
+                Linki WhatsApp, Telegram veya E-posta ile gönderin. Alıcı tıkladığında davetiye hemen açılacaktır.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sayaç Ayarları
+        const currentYear = new Date().getFullYear();
+        let targetDate = new Date(`July 18, ${currentYear} 19:00:00`).getTime();
+
+        if (targetDate < new Date().getTime()) {
+            targetDate = new Date(`July 18, ${currentYear + 1} 19:00:00`).getTime();
+        }
+
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = d < 10 ? '0' + d : d;
+            document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+            document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+            document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+
+            if (difference < 0) {
+                clearInterval(countdownInterval);
+                document.querySelector('.countdown-section').innerHTML = "<h3>🎉 Düğün Günü Geldi! 🎉</h3>";
+            }
+        }, 1000);
+
+        // Müzik ve Kapak Kontrolü
+        const backgroundMusic = document.getElementById('bgMusic1');
+        let isPlaying = false;
+
+        function openInvitation() {
+            document.getElementById('weddingCover').classList.add('opened');
+            backgroundMusic.play().then(() => {
+                isPlaying = true;
+                document.getElementById('musicBtn').innerHTML = "<span>🎵 Müzik: Açık</span>";
+            }).catch(() => {
+                console.log("Müzik için tıklama bekleniyor.");
+            });
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                backgroundMusic.pause();
+                isPlaying = false;
+                document.getElementById('musicBtn').innerHTML = "<span>🎵 Müzik: Kapalı</span>";
+            } else {
+                backgroundMusic.play();
+                isPlaying = true;
+                document.getElementById('musicBtn').innerHTML = "<span>🎵 Müzik: Açık</span>";
+            }
+        }
+
+        function rsvpStatus(status) {
+            alert(`Yanıtınız kaydedildi: ${status}`);
+        }
+
+        function copyToClipboard() {
+            const linkBox = document.getElementById('linkBox');
+            const link = linkBox.innerText;
+            
+            navigator.clipboard.writeText(link).then(() => {
+                const feedback = document.getElementById('copyFeedback');
+                feedback.style.display = 'block';
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                }, 2000);
+            }).catch(err => {
+                alert('Linki kopyalanamadı: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>
